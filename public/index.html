@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Drive Videólejátszó</title>
+  <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
+  <style>
+    /* Egyszerű stílusok */
+    body { font-family: sans-serif; }
+    #video-list { list-style: none; padding: 0; }
+    #video-list li { cursor: pointer; padding: 5px; }
+    #video-list li:hover { background-color: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h1>Google Drive Videólejátszó</h1>
+  <a href="/auth/google">Bejelentkezés Google-fiókkal</a>
+
+  <h2>Videóim</h2>
+  <ul id="video-list"></ul>
+
+  <video id="my-video" class="video-js" controls preload="auto" width="640" height="264">
+  </video>
+
+  <script src="https://vjs.zencdn.net/7.14.3/video.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
