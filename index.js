@@ -73,3 +73,35 @@ app.get('/api/video/:fileId', async (req, res) => {
 });
 
 // ... (a listen metódus)
+
+app.get('/api/subtitle/:fileId', async (req, res) => {
+  try {
+    const { fileId } = req.params;
+    const drive = google.drive({ version: 'v3', auth: oauth2Client });
+
+    // A videó nevének lekérése
+    const file = await drive.files.get({ fileId, fields: 'name' });
+    const videoName = file.data.name.split('.')[0];
+
+    // A feliratfájl keresése a videó neve alapján
+    const subtitleResponse = await drive.files.list({
+      q: `name = '${videoName}.vtt' or name = '${videoName}.srt'`,
+      fields: 'files(id)',
+    });
+
+    if (subtitleResponse.data.files.length > 0) {
+      const subtitleId = subtitleResponse.data.files[0].id;
+      const subtitleStream = await drive.files.get(
+        { fileId: subtitleId, alt: 'media' },
+        { responseType: 'stream' }
+      );
+      res.header('Content-Type', 'text/vtt');
+      subtitleStream.data.pipe(res);
+    } else {
+      res.status(404).send('Nem található feliratfájl.');
+    }
+  } catch (error) {
+    res.status(500).send('Hiba a feliratfájl lekérése közben.');
+  }
+});
+
