@@ -51,4 +51,32 @@ function playVideo(fileId) {
 
   videoPlayer.play();
 }
+// Az app.js végére
+const fontSizeInput = document.getElementById('font-size');
+const fontColorInput = document.getElementById('font-color');
+const positionSelect = document.getElementById('position');
+
+fontSizeInput.addEventListener('change', updateSubtitleStyle);
+fontColorInput.addEventListener('change', updateSubtitleStyle);
+positionSelect.addEventListener('change', updateSubtitleStyle);
+
+function updateSubtitleStyle() {
+  const style = `
+    .video-js .vjs-text-track-display div {
+      font-size: ${fontSizeInput.value}px !important;
+      color: ${fontColorInput.value} !important;
+      top: ${positionSelect.value === 'top' ? '5%' : 'auto'} !important;
+      bottom: ${positionSelect.value === 'bottom' ? '5%' : 'auto'} !important;
+    }
+  `;
+
+  let styleElement = document.getElementById('subtitle-style');
+  if (!styleElement) {
+    styleElement = document.createElement('style');
+    styleElement.id = 'subtitle-style';
+    document.head.appendChild(styleElement);
+  }
+  styleElement.innerHTML = style;
+}
+
 
