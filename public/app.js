@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     videoPlayer.play();
   }
 });
+
 // A playVideo funkció frissítése az app.js-ben
 function playVideo(fileId) {
   videoPlayer.src({
@@ -50,3 +51,4 @@ function playVideo(fileId) {
 
   videoPlayer.play();
 }
+
